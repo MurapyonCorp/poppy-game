@@ -16,7 +16,7 @@ public class PlayerManager : MonoBehaviour
 
   float speed;
 
-  float jumpPower = 400;
+  float jumpPower = 575;
 
   void Start()
   {
@@ -83,5 +83,17 @@ public class PlayerManager : MonoBehaviour
     Debug.DrawLine(leftStartPoint, endStartPoint);
     Debug.DrawLine(rightStartPoint, endStartPoint);
     return Physics2D.Linecast(leftStartPoint, endStartPoint, blockLayer) || Physics2D.Linecast(rightStartPoint, endStartPoint, blockLayer);
+  }
+
+  void OnTriggerEnter2D(Collider2D collision)
+  {
+    if (collision.gameObject.tag == "Trap")
+    {
+      Debug.Log("ゲームオーバー");
+    }
+    else if (collision.gameObject.tag == "Finish")
+    {
+      Debug.Log("クリア");
+    }
   }
 }
