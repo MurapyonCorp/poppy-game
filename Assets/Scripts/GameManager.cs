@@ -9,13 +9,13 @@ public class GameManager : MonoBehaviour
   public void GameOver()
   {
     gameOverText.SetActive(true);
-    RestartScene();
+    Invoke("RestartScene", 1.5f);
   }
 
   public void GameClear()
   {
     gameClearText.SetActive(true);
-    RestartScene();
+    Invoke("RestartScene", 1.5f);
   }
 
   void RestartScene()
