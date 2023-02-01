@@ -98,5 +98,10 @@ public class PlayerManager : MonoBehaviour
       Debug.Log("クリア");
       gameManager.GameClear();
     }
+    else if (collision.gameObject.tag == "Item")
+    {
+      // アイテム取得
+      collision.gameObject.GetComponent<ItemManager>().GetItem();
+    }
   }
 }
