@@ -103,5 +103,20 @@ public class PlayerManager : MonoBehaviour
       // アイテム取得
       collision.gameObject.GetComponent<ItemManager>().GetItem();
     }
+    else if (collision.gameObject.tag == "Enemy")
+    {
+      EnemyManager enemy = collision.gameObject.Getcomponent<EnemyManager>();
+      if (this.transform.position.y + 0.2f > enemy.transform.position.y)
+      {
+        // 上から踏んだら敵を削除
+
+      }
+      else
+      {
+        // 横からぶつかったらプレイヤー破壊
+        Destroy(this.gameObject);
+        gameManager.GameOver();
+      }
+    }
   }
 }

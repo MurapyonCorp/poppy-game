@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
+  [SerializeField] LayerMask blockLayer;
+
   enum DIRECTION_TYPE
   {
     STOP,
@@ -52,7 +54,10 @@ public class EnemyManager : MonoBehaviour
 
   bool IsGround()
   {
-    return true;
+    Vector3 startVec = transform.position + transform.right * 0.5f * transform.localScale.x;
+    Vector3 endVec = startVec - transform.up * 0.5f;
+    Debug.DrawLine(startVec, endVec);
+    return Physics2D.Linecast(startVec, endVec, blockLayer);
   }
 
   void ChangeDirection()

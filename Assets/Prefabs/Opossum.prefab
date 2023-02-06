@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1937472116595714037}
   - component: {fileID: 2874035723323435864}
   - component: {fileID: 9098058459061032842}
+  - component: {fileID: 2302302481674985821}
   m_Layer: 0
   m_Name: Opossum
   m_TagString: Untagged
@@ -157,3 +158,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8305560123787584d9be353c1c69e588, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  blockLayer:
+    serializedVersion: 2
+    m_Bits: 64
+--- !u!61 &2302302481674985821
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7028103867615345969}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.1795778, y: -0.059859283}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.125, y: 0.875}
+    newSize: {x: 0.36, y: 0.28}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.655335, y: 0.31324375}
+  m_EdgeRadius: 0
