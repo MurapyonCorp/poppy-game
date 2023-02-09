@@ -105,11 +105,13 @@ public class PlayerManager : MonoBehaviour
     }
     else if (collision.gameObject.tag == "Enemy")
     {
-      EnemyManager enemy = collision.gameObject.Getcomponent<EnemyManager>();
+      EnemyManager enemy = collision.gameObject.GetComponent<EnemyManager>();
       if (this.transform.position.y + 0.2f > enemy.transform.position.y)
       {
         // ã‚©‚ç“¥‚ñ‚¾‚ç“G‚ğíœ
-
+        rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, 0);
+        Jump();
+        enemy.DestroyEnemy();
       }
       else
       {

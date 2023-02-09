@@ -71,4 +71,9 @@ public class EnemyManager : MonoBehaviour
       direction = DIRECTION_TYPE.RIGHT;
     }
   }
+
+  public void DestroyEnemy()
+  {
+    Destroy(this.gameObject);
+  }
 }
