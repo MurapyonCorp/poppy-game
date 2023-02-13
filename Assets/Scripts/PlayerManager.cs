@@ -17,16 +17,20 @@ public class PlayerManager : MonoBehaviour
 
   float speed;
 
+  Animator animator;
+
   float jumpPower = 575;
 
   void Start()
   {
     rigidbody2D = GetComponent<Rigidbody2D>();
+    animator = GetComponent<Animator>();
   }
 
   void Update()
   {
-    float x = Input.GetAxis("Horizontal");
+    float x = Input.GetAxis("Horizontal"); // •ûŒüƒL[‚Ìæ“¾
+    animator.SetFloat("speed", Mathf.Abs(x));
 
     if (x == 0)
     {
