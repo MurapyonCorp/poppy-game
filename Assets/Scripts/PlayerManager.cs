@@ -42,15 +42,24 @@ public class PlayerManager : MonoBehaviour
       // 右へ
       direction = DIRECTION_TYPE.RIGHT;
     }
-    else if (x < 0)
+    else
     {
       // 左へ
       direction = DIRECTION_TYPE.LEFT;
     }
     // スペースが押されたらJumpさせる
-    if (IsGround() && Input.GetKeyDown("space"))
+    switch (IsGround())
     {
-      Jump();
+      case true:
+        animator.SetBool("isJumping", false);
+        if (Input.GetKeyDown("space"))
+        {
+          Jump();
+        }
+        break;
+      case false:
+        animator.SetBool("isJumping", true);
+        break;
     }
   }
 
