@@ -103,12 +103,10 @@ public class PlayerManager : MonoBehaviour
   {
     if (collision.gameObject.tag == "Trap")
     {
-      Debug.Log("ゲームオーバー");
-      gameManager.GameOver();
+      PlayerDeath();
     }
     else if (collision.gameObject.tag == "Finish")
     {
-      Debug.Log("クリア");
       gameManager.GameClear();
     }
     else if (collision.gameObject.tag == "Item")
@@ -129,9 +127,16 @@ public class PlayerManager : MonoBehaviour
       else
       {
         // 横からぶつかったらプレイヤー破壊
-        Destroy(this.gameObject);
-        gameManager.GameOver();
+        PlayerDeath();
       }
     }
+  }
+
+  void PlayerDeath()
+  {
+    rigidbody2D.velocity = new Vector2(0, 0);
+    rigidbody2D.AddForce(Vector2.up * jumpPower);
+    animator.Play("PlayerDeathAnimation");
+    gameManager.GameOver();
   }
 }

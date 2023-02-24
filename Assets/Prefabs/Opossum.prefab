@@ -187,3 +187,4 @@ MonoBehaviour:
   blockLayer:
     serializedVersion: 2
     m_Bits: 64
+  deathEffect: {fileID: 2273918636566979099, guid: 3481512c0d98fe0498192961b8ba06d5, type: 3}
