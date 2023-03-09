@@ -17,18 +17,35 @@ public class PlayerManager : MonoBehaviour
 
   float speed;
 
+  bool isDead = false;
+
   Animator animator;
+  // SE
+  [SerializeField] AudioClip getItemSE;
+  [SerializeField] AudioClip jumpSE;
+  [SerializeField] AudioClip stampSE;
+  AudioSource audioSource;
 
   float jumpPower = 575;
+
+  float deadPower = 400;
 
   void Start()
   {
     rigidbody2D = GetComponent<Rigidbody2D>();
     animator = GetComponent<Animator>();
+    audioSource = GetComponent<AudioSource>();
   }
 
   void Update()
   {
+    if (isDead)
+    {
+      animator.SetBool("isJumping", false);
+      animator.Play("PlayerDeathAnimation");
+      return;
+    }
+
     float x = Input.GetAxis("Horizontal"); // 方向キーの取得
     animator.SetFloat("speed", Mathf.Abs(x));
 
@@ -48,23 +65,27 @@ public class PlayerManager : MonoBehaviour
       direction = DIRECTION_TYPE.LEFT;
     }
     // スペースが押されたらJumpさせる
-    switch (IsGround())
+    if (IsGround())
     {
-      case true:
-        animator.SetBool("isJumping", false);
-        if (Input.GetKeyDown("space"))
-        {
-          Jump();
-        }
-        break;
-      case false:
-        animator.SetBool("isJumping", true);
-        break;
+      animator.SetBool("isJumping", false);
+      if (Input.GetKeyDown("space"))
+      {
+        Jump();
+      }
+    }
+    else
+    {
+      animator.SetBool("isJumping", true);
     }
   }
 
   void FixedUpdate()
   {
+    if (isDead)
+    {
+      return;
+    }
+
     switch (direction)
     {
       case DIRECTION_TYPE.STOP:
@@ -86,6 +107,7 @@ public class PlayerManager : MonoBehaviour
   {
     // 上に力を加える
     rigidbody2D.AddForce(Vector2.up * jumpPower);
+    audioSource.PlayOneShot(jumpSE);
   }
 
   bool IsGround()
@@ -101,42 +123,50 @@ public class PlayerManager : MonoBehaviour
 
   void OnTriggerEnter2D(Collider2D collision)
   {
-    if (collision.gameObject.tag == "Trap")
+    if (isDead)
     {
-      PlayerDeath();
+      return;
     }
-    else if (collision.gameObject.tag == "Finish")
+
+    switch (collision.gameObject.tag)
     {
-      gameManager.GameClear();
-    }
-    else if (collision.gameObject.tag == "Item")
-    {
-      // アイテム取得
-      collision.gameObject.GetComponent<ItemManager>().GetItem();
-    }
-    else if (collision.gameObject.tag == "Enemy")
-    {
-      EnemyManager enemy = collision.gameObject.GetComponent<EnemyManager>();
-      if (this.transform.position.y + 0.2f > enemy.transform.position.y)
-      {
-        // 上から踏んだら敵を削除
-        rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, 0);
-        Jump();
-        enemy.DestroyEnemy();
-      }
-      else
-      {
-        // 横からぶつかったらプレイヤー破壊
+      case "Trap":
         PlayerDeath();
-      }
+        break;
+      case "Finish":
+        gameManager.GameClear();
+        break;
+      case "Item":
+        // アイテム取得
+        audioSource.PlayOneShot(getItemSE);
+        collision.gameObject.GetComponent<ItemManager>().GetItem();
+        break;
+      case "Enemy":
+        EnemyManager enemy = collision.gameObject.GetComponent<EnemyManager>();
+        if (this.transform.position.y + 0.2f > enemy.transform.position.y)
+        {
+          // 上から踏んだら敵を削除
+          rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, 0);
+          Jump();
+          audioSource.PlayOneShot(stampSE);
+          enemy.DestroyEnemy();
+        }
+        else
+        {
+          // 横からぶつかったらプレイヤー破壊
+          PlayerDeath();
+        }
+        break;
     }
   }
 
   void PlayerDeath()
   {
+    isDead = true;
     rigidbody2D.velocity = new Vector2(0, 0);
-    rigidbody2D.AddForce(Vector2.up * jumpPower);
-    animator.Play("PlayerDeathAnimation");
+    rigidbody2D.AddForce(Vector2.up * deadPower);
+    BoxCollider2D boxCollider2D = GetComponent<BoxCollider2D>();
+    Destroy(boxCollider2D);
     gameManager.GameOver();
   }
 }

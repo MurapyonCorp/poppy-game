@@ -62,3 +62,11 @@ Update Mode: updateDependencies
 
 The following packages were updated:
   com.unity.collab-proxy from version 1.17.7 to 2.0.0
+
+=== Mon Mar  6 12:24:48 2023
+
+Packages were changed.
+Update Mode: updateDependencies
+
+The following packages were updated:
+  com.unity.collab-proxy from version 2.0.0 to 2.0.1
