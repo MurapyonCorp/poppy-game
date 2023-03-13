@@ -43,12 +43,23 @@ public class GameManager : MonoBehaviour
   {
     gameClearText.SetActive(true);
     audioSource.PlayOneShot(gameClearSE);
-    Invoke("RestartScene", 1.5f);
+    Invoke("NextScene", 1.5f);
   }
 
   void RestartScene()
   {
     Scene thisScene = SceneManager.GetActiveScene();
     SceneManager.LoadScene(thisScene.name);
+  }
+
+  void NextScene()
+  {
+    Scene thisScene = SceneManager.GetActiveScene();
+    switch (thisScene.name)
+    {
+      case "SampleScene":
+        SceneManager.LoadScene("SecondStage");
+        break;
+    }
   }
 }
